@@ -7,8 +7,8 @@ on:
     branches: [ main ]
 
 jobs:
-  build:
-
+  build-cpp:
+    name: Build and Test C++
     runs-on: ubuntu-22.04
 
     steps:
@@ -18,12 +18,11 @@ jobs:
     - name: Install dependencies
       run: |
         sudo apt update
-        sudo apt install -y cmake g++ libgtest-dev python3-pip
+        sudo apt install -y cmake g++ libgtest-dev
         cd /usr/src/gtest
         sudo cmake .
         sudo make
         sudo cp lib/*.a /usr/lib
-        pip3 install pytest
 
     - name: Build
       run: |
@@ -37,8 +36,20 @@ jobs:
         cd build
         ctest --output-on-failure
 
+  test-python:
+    name: Run Python Unit Tests
+    runs-on: ubuntu-22.04
 
-        
-    - name: Run Python tests with pytest
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+
+    - name: Install Python + pytest
+      run: |
+        sudo apt update
+        sudo apt install -y python3-pip
+        pip3 install pytest
+
+    - name: Run Python tests
       run: |
         pytest
