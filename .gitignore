@@ -2,3 +2,6 @@
 /.vscode
 /.pytest_cache
 /__pycache__
+/ws_ros2/build
+/ws_ros2/install
+/ws_ros2/log

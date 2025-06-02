@@ -53,3 +53,38 @@ jobs:
     - name: Run Python tests
       run: |
         pytest
+
+  test-ros2:
+    name: ROS 2 Build & Test
+    runs-on: ubuntu-22.04
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+
+    - name: Install ROS 2 Humble
+      uses: ros-tooling/setup-ros@v0.6
+      with:
+        required-ros-distributions: humble
+
+    - name: Install colcon and Python deps
+      run: |
+        sudo apt update
+        sudo apt install -y python3-colcon-common-extensions python3-pytest \
+                            python3-pip python3-pytest-cov
+        pip3 install flake8
+
+    - name: Build workspace
+      run: |
+        source /opt/ros/humble/setup.bash
+        colcon build --event-handlers console_direct+
+
+    - name: Run tests
+      run: |
+        source install/setup.bash
+        colcon test --event-handlers console_direct+
+
+    - name: Test result summary
+      run: |
+        source install/setup.bash
+        colcon test-result --verbose
