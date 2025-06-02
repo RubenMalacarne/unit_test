@@ -9,7 +9,7 @@ on:
 jobs:
   build:
 
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-22.04
 
     steps:
     - name: Checkout code
@@ -18,11 +18,12 @@ jobs:
     - name: Install dependencies
       run: |
         sudo apt update
-        sudo apt install -y cmake g++ libgtest-dev
+        sudo apt install -y cmake g++ libgtest-dev python3-pip
         cd /usr/src/gtest
         sudo cmake .
         sudo make
         sudo cp lib/*.a /usr/lib
+        pip3 install pytest
 
     - name: Build
       run: |
@@ -31,7 +32,13 @@ jobs:
         cmake ..
         make
 
-    - name: Run tests
+    - name: Run C++ tests
       run: |
         cd build
         ctest --output-on-failure
+
+
+        
+    - name: Run Python tests with pytest
+      run: |
+        pytest
