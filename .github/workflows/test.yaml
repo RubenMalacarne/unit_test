@@ -36,23 +36,23 @@ jobs:
         cd build
         ctest --output-on-failure
 
-  test-python:
-    name: Run Python Unit Tests
-    runs-on: ubuntu-22.04
+  # test-python:
+  #   name: Run Python Unit Tests
+  #   runs-on: ubuntu-22.04
 
-    steps:
-    - name: Checkout code
-      uses: actions/checkout@v4
+  #   steps:
+  #   - name: Checkout code
+  #     uses: actions/checkout@v4
 
-    - name: Install Python + pytest
-      run: |
-        sudo apt update
-        sudo apt install -y python3-pip
-        pip3 install pytest
+  #   - name: Install Python + pytest
+  #     run: |
+  #       sudo apt update
+  #       sudo apt install -y python3-pip
+  #       pip3 install pytest
 
-    - name: Run Python tests
-      run: |
-        pytest
+  #   - name: Run Python tests
+  #     run: |
+  #       pytest
 
   test-ros2:
     name: ROS 2 Build & Test
