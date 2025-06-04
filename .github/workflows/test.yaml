@@ -2,9 +2,9 @@ name: Build and Test C++
 
 on:
   push:
-    branches: [ main , humble , hub_action]
+    branches: [ main , humble , hub_actions]
   pull_request:
-    branches: [ main , humble, hub_action]
+    branches: [ main , humble, hub_actions]
 
 jobs:
   build-cpp:
