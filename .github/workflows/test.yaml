@@ -146,5 +146,3 @@ jobs:
           target-ros2-distro: ${{ matrix.ros_distribution }}
           package-name: |
             pkg_test    
-          working-directory: ros_ws
-          # working-directory: ros_ws
