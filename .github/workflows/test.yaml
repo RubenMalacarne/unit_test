@@ -104,7 +104,7 @@ jobs:
   
   
   ROS_CI:
-    runs-on: ubuntu-22.04
+    runs-on: ubuntu-latest
     strategy: 
       fail-fast: false
       matrix:
@@ -126,14 +126,11 @@ jobs:
         image: ${{ matrix.docker_image }}
     
     steps:
-      
-      - name: Setup workspace
-        run: mkdir -p ros_ws/src
 
-      - name: Checkout code
+      - name: Checkout code and setup workspace
         uses: actions/checkout@v4
         with:
-          path: ros_ws/src
+          path: ros_ws
 
       - name: Setup ROS environment
         uses: ros-tooling/setup-ros@v0.7
@@ -145,4 +142,5 @@ jobs:
         with:
           target-ros2-distro: ${{ matrix.ros_distribution }}
           package-name: |
-            pkg_test
+            pkg_test  
+          working-directory: ros_ws
