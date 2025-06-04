@@ -2,9 +2,9 @@ name: Build and Test C++
 
 on:
   push:
-    branches: [ main , humble]
+    branches: [ main , humble , hub_action]
   pull_request:
-    branches: [ main , humble]
+    branches: [ main , humble, hub_action]
 
 jobs:
   build-cpp:
@@ -126,14 +126,13 @@ jobs:
         image: ${{ matrix.docker_image }}
     
     steps:
+      - name: Setup workspace
+        run: mkdir -p ros_ws/src
 
       - name: Checkout code and setup workspace
         uses: actions/checkout@v4
-
-      - name: Rearrange workspace structure
-        run: |
-          mkdir -p ros_ws/src
-          mv ws_ros2/src/pkg_test ros_ws/src/
+        with:
+          path: ros_ws/src
 
       - name: Setup ROS environment
         uses: ros-tooling/setup-ros@v0.7
